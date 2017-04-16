@@ -1,14 +1,10 @@
-class Admin::ResumesController < ApplicationController
+class ResumesController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_is_admin
 
-  layout 'admin'
-
-  def index
+  def new
     @job = Job.find(params[:job_id])
-    @resumes = @job.resumes.order('created_at DESC')
+    @resume = Resume.new
   end
-
 
   def create
     @job = Job.find(params[:job_id])
@@ -27,6 +23,6 @@ class Admin::ResumesController < ApplicationController
   private
 
   def resume_params
-    params.require(:resume).permit(:content)
+    params.require(:resume).permit(:content, :attachment)
   end
 end
